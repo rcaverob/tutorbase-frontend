@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: '50px',
     background: 'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
     color: 'white',
-    margin: '0px 30px',
+    margin: '0px 25px',
     padding: '10px 30px',
   },
   linkText: {
@@ -28,20 +28,42 @@ const Navbar = (props) => {
       return (
         <div className="right-header">
           <Button variant="contained" className={classes.submitBtn}>
-            <NavLink id="sign-out-button" to="/" onClick={props.signoutUser} className={classes.linkText}>Sign Out</NavLink>
+            <NavLink
+              id="sign-out-button"
+              to="/"
+              onClick={props.signoutUser}
+              className={classes.linkText}
+            >
+              Sign Out
+            </NavLink>
           </Button>
         </div>
       );
     } else {
       return (
         <div className="right-header">
-          <Button variant="contained" className={classes.submitBtn}><NavLink id="sign-up-button" to="/signup" className={classes.linkText}>Sign Up</NavLink></Button>
-          <Button variant="contained" className={classes.submitBtn}><NavLink id="sign-in-button" to="/signin" className={classes.linkText}>Sign In</NavLink></Button>
+          <Button variant="contained" className={classes.submitBtn}>
+            <NavLink
+              id="sign-up-button"
+              to="/signup"
+              className={classes.linkText}
+            >
+              Sign Up
+            </NavLink>
+          </Button>
+          <Button variant="contained" className={classes.submitBtn}>
+            <NavLink
+              id="sign-in-button"
+              to="/signin"
+              className={classes.linkText}
+            >
+              Sign In
+            </NavLink>
+          </Button>
         </div>
       );
     }
   };
-
 
   return (
     <nav>
@@ -52,7 +74,6 @@ const Navbar = (props) => {
     </nav>
   );
 };
-
 
 function mapStateToProps(reduxState) {
   return {

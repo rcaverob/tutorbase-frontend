@@ -11,7 +11,7 @@
     "build": "yarn clean; SET WEBPACK_ENV=production& webpack --colors",
     "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors",
     "clean": "rimraf dist",
-    "deploy": "yarn build; surge -p dist -d tutorbase.surge.sh; yarn clean"
+    "deploy": "yarn build; surge -p dist -d tutor_base.surge.sh; yarn clean"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
