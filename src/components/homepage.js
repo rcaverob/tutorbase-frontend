@@ -71,13 +71,13 @@ const useStyles = makeStyles((theme) => ({
   navTop: {
     textDecoration: 'none',
     [theme.breakpoints.up('sm')]: {
-      alignSelf: 'start',
+      alignSelf: 'flex-start',
     },
   },
   navBottom: {
     textDecoration: 'none',
     [theme.breakpoints.up('sm')]: {
-      alignSelf: 'end',
+      alignSelf: 'flex-end',
     },
   },
   midSection: {
