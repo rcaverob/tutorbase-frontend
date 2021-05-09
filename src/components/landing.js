@@ -17,18 +17,18 @@ class LandingPage extends React.Component {
 
   goHomePage = () => {
     this.homeRef.current.scrollIntoView({ behavior: 'smooth' });
-  }
+  };
 
   goAboutPage = () => {
     this.aboutRef.current.scrollIntoView({ behavior: 'smooth' });
-  }
+  };
 
   render() {
     return (
       <div>
-        <span ref={this.homeRef}>
+        <div ref={this.homeRef}>
           <HomePage key={0} handlePageDown={this.goAboutPage} />
-        </span>
+        </div>
         <span ref={this.aboutRef}>
           <About handlePageUp={this.goHomePage} />
         </span>

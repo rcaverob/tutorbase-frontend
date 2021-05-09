@@ -1,24 +1,96 @@
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Navbar from './navbar';
-import logo from '../img/logo.png';
 import background from '../img/baker.png';
 
 const useStyles = makeStyles((theme) => ({
-  stickBottom: {
-    marginTop: '100px',
-  },
   fullScreen: {
-    size: '100%',
+    width: '100%',
     minHeight: '100vh',
-    minWidth: '100vw',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 
     backgroundImage: `url(${background})`,
     backgroundSize: 'cover',
     margin: '0px',
+  },
+  brandTitleContainer: {
+    alignSelf: 'center',
+    textAlign: 'center',
+  },
+  brandTitle: {
+    fontFamily: 'Yellowtail',
+    fontSize: '240px',
+    fontWeight: 'normal',
+    display: 'inline',
+    userSelect: 'none',
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    color: '#fbfbfb',
+    textShadow: '4px 4px #333',
+
+    [theme.breakpoints.down('md')]: {
+      fontSize: '190px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '160px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      margin: '0px',
+      fontSize: '130px',
+      display: 'block',
+    },
+  },
+  brandStart: {
+    marginLeft: '-0.2em',
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '-0.9em',
+    },
+  },
+  brandEnd: {
+    position: 'relative',
+    top: '0.28em',
+    marginLeft: '-0.12em',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '-0.8em',
+      marginLeft: '0.6em',
+    },
+  },
+  subtitle: {
+    textShadow: '2px 2px 3px #333',
+    color: '#fbfbfb',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '22px',
+    },
+  },
+  navTop: {
+    textDecoration: 'none',
+    [theme.breakpoints.up('sm')]: {
+      alignSelf: 'flex-start',
+    },
+  },
+  navBottom: {
+    textDecoration: 'none',
+    [theme.breakpoints.up('sm')]: {
+      alignSelf: 'flex-end',
+    },
+  },
+  midSection: {
+    width: '550px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+
+    [theme.breakpoints.down('xs')]: {
+      color: 'purple',
+      alignItems: 'center',
+      width: 'auto',
+    },
   },
   content: {
     display: 'flex',
@@ -31,7 +103,6 @@ const useStyles = makeStyles((theme) => ({
     width: '238px',
     height: '56px',
     borderRadius: '71px',
-    marginRight: '300px',
     textTransform: 'lowercase',
     fontSize: '1.5rem',
     textAlign: 'center',
@@ -42,8 +113,6 @@ const useStyles = makeStyles((theme) => ({
     width: '238px',
     height: '56px',
     borderRadius: '71px',
-    marginLeft: '300px',
-    marginBottom: '200px',
     textTransform: 'lowercase',
     fontSize: '1.5rem',
   },
@@ -52,42 +121,94 @@ const useStyles = makeStyles((theme) => ({
     p: {
       fontSize: '24px',
     },
-    h1: {
+    h2: {
       fontSize: '36px',
       fontWeight: 'normal',
     },
   },
-
 }));
-
 
 function HomePage(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.fullScreen}>
-      <main className={classes.content}>
-        <img src={logo} alt="Tutor Base" width="864px" height="401px" />
-        <p>tutorbase tenacisously touts tutors to tutees and tutees to tutors</p>
-        <NavLink to="/tutors" style={{ textDecoration: 'none' }}>
-          <Button className={classes.btnTo} variant="contained" color="primary" size="large">
+    <section className={classes.fullScreen}>
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-evenly',
+        }}
+      >
+        <div className={classes.brandTitleContainer}>
+          <h1 className={`${classes.brandTitle} ${classes.brandStart}`}>
+            Tutor
+          </h1>
+          <h1 className={`${classes.brandTitle} ${classes.brandEnd}`}>Base</h1>
+        </div>
+        <div
+          style={{
+            paddingLeft: '12px',
+            paddingRight: '12px',
+            paddingTop: '15px',
+            textAlign: 'center',
+          }}
+        >
+          <p className={classes.subtitle}>
+            TutorBase tenacisously touts tutors to tutees and tutees to tutors.
+          </p>
+        </div>
+      </div>
+      <div className={classes.midSection}>
+        <NavLink to="/tutors" className={classes.navTop}>
+          <Button
+            className={classes.btnTo}
+            variant="contained"
+            color="primary"
+            size="large"
+          >
             Find Tutors
           </Button>
         </NavLink>
-        <h1>or...</h1>
-        <NavLink to="/tutees" style={{ textDecoration: 'none' }}>
-          <Button className={classes.btnTe} variant="contained" color="primary" size="large">
+        <h2
+          style={{
+            alignSelf: 'center',
+            color: '#fbfbfb',
+            textShadow: '2px 2px 3px #333',
+            margin: '4px',
+          }}
+        >
+          or...
+        </h2>
+        <NavLink to="/tutees" className={classes.navBottom}>
+          <Button
+            className={classes.btnTe}
+            variant="contained"
+            color="primary"
+            size="large"
+          >
             Find Tutees
           </Button>
         </NavLink>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flex: '1',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ height: '10px' }} />
         <Navbar />
-      </main>
-      <Grid container direction="column" justiy="center" alignItems="center">
-        <Grid item>
-          <KeyboardArrowDownIcon style={{ fontSize: 64, color: '#262B40' }} className={classes.stickBottom} onClick={props.handlePageDown} />
-        </Grid>
-      </Grid>
-    </div>
+        <KeyboardArrowDownIcon
+          style={{ fontSize: 64, color: '#262B40' }}
+          onClick={props.handlePageDown}
+        />
+      </div>
+    </section>
   );
 }
 
