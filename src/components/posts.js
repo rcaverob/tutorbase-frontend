@@ -1,9 +1,14 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
-  Paper, Typography, Button, Divider, Container, TextField,
+  Paper,
+  Typography,
+  Button,
+  Divider,
+  Container,
+  TextField,
 } from '@material-ui/core';
 
 import Carousel, { consts } from 'react-elastic-carousel';
@@ -43,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
   carousel: {
     border: 'none',
   },
-
 }));
 
 const Posts = (props) => {
@@ -58,7 +62,7 @@ const Posts = (props) => {
     { width: 950, itemsToShow: 3 },
   ]);
   useEffect(() => {
-  // Your code here
+    // Your code here
     if (!mode) {
       mode = 'tutors';
     }
@@ -71,10 +75,8 @@ const Posts = (props) => {
 
   const classes = useStyles();
 
-
   function handleRequest(userID, postID) {
     const reqType = props.isTutor ? 'tutors' : 'tutees';
-
 
     const request = {
       userID,
@@ -98,15 +100,38 @@ const Posts = (props) => {
   };
 
   const filteredPosts = props.posts.filter((post) => {
-    return (post._id.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) || searchInPosts(searchString, post.people);
+    return (
+      post._id.toLowerCase().indexOf(searchString.toLowerCase()) !== -1 ||
+      searchInPosts(searchString, post.people)
+    );
   });
-
 
   // Loads "Request" button and links based on auth (request and go to reqs if auth, otherwise login page)
   const requestButton = (post) => {
-    return (props.auth
-      ? (<Button size="small" variant="contained" className={classes.submitBtn} onClick={() => { handleRequest(post.userID, post.postID); }}>Request</Button>)
-      : (<Button size="small" variant="contained" className={classes.submitBtn}><Link to="/signin" className={classes.btnLink}>Request</Link></Button>));
+    if (!props.auth)
+      return (
+        <Button size="small" variant="contained" className={classes.submitBtn}>
+          <Link to="/signin" className={classes.btnLink}>
+            Request
+          </Link>
+        </Button>
+      );
+
+    const alreadyRequested = props.currentUser.requestedPostIDs;
+    console.log('ALREADY REQ: !!!!');
+    console.log(alreadyRequested);
+    return (
+      <Button
+        size="small"
+        variant="contained"
+        className={classes.submitBtn}
+        onClick={() => {
+          handleRequest(post.userID, post.postID);
+        }}
+      >
+        Request
+      </Button>
+    );
   };
 
   const setPostModalInfo = (postID, username) => {
@@ -120,16 +145,27 @@ const Posts = (props) => {
     curKey += 1;
     const filteredStudents = dept.people.filter((post) => {
       if (post && post.user.name) {
-        return (post.user.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1 || dept._id.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
+        return (
+          post.user.name.toLowerCase().indexOf(searchString.toLowerCase()) !==
+            -1 ||
+          dept._id.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+        );
       } else return post;
     });
     const postItems = filteredStudents.map((post) => {
-      // console.log('post');
-      // console.log(post);
       curKey += 1;
       return (
-        <Paper elevation={3} style={{ margin: '20px', padding: '10px' }} key={curKey} className={classes.root}>
-          <div onClick={() => { setPostModalInfo(post.postID, post.user.name); }}>
+        <Paper
+          elevation={3}
+          style={{ margin: '20px', padding: '10px' }}
+          key={curKey}
+          className={classes.root}
+        >
+          <div
+            onClick={() => {
+              setPostModalInfo(post.postID, post.user.name);
+            }}
+          >
             <Typography variant="h5" component="h2">
               {post.user.name}
             </Typography>
@@ -140,9 +176,7 @@ const Posts = (props) => {
               Availability: {post.availability}
             </Typography>
           </div>
-          <div>
-            {requestButton(post)}
-          </div>
+          <div>{requestButton(post)}</div>
         </Paper>
       );
     });
@@ -151,10 +185,16 @@ const Posts = (props) => {
         <Typography variant="h4"> {dept._id} </Typography>
         <Carousel
           renderArrow={({ type, onClick }) => {
-            console.log('type');
-            console.log(type);
             return (
-              <div className={classes.arrow} role="button" type="submit" tabIndex="0" onClick={onClick}>{type === consts.PREV ? '<' : '>'}</div>
+              <div
+                className={classes.arrow}
+                role="button"
+                type="submit"
+                tabIndex="0"
+                onClick={onClick}
+              >
+                {type === consts.PREV ? '<' : '>'}
+              </div>
             );
           }}
           pagination={false}
@@ -172,21 +212,36 @@ const Posts = (props) => {
     <div>
       <img src={favicon} alt="" style={{ display: 'none' }} />
 
-      <Post open={modalOpen} handleRequest={handleRequest} handleClose={() => { editModal(false); }} id={currentPostID} username={userName} />
+      <Post
+        open={modalOpen}
+        handleRequest={handleRequest}
+        handleClose={() => {
+          editModal(false);
+        }}
+        id={currentPostID}
+        username={userName}
+      />
 
       <form className={classes.root} noValidate autoComplete="off">
-        <TextField id="standard-basic" label="Search" onChange={(event) => { changeSearch(event.target.value); }} value={searchString} />
+        <TextField
+          id="standard-basic"
+          label="Search"
+          onChange={(event) => {
+            changeSearch(event.target.value);
+          }}
+          value={searchString}
+        />
       </form>
       {carousels}
     </div>
   );
 };
 
-
 function mapStateToProps(reduxState) {
   return {
     posts: reduxState.posts.all,
     auth: reduxState.auth.authenticated,
+    currentUser: reduxState.auth.currentUser,
   };
 }
 

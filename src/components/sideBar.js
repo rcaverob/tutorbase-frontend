@@ -99,8 +99,6 @@ const SideBar = (props) => {
   // const classes2 = useStyles2();
   const { children } = props;
   const location = useLocation();
-  // console.log(location);
-  // console.log(children);
 
   const Item = ({ name, text }) => (
     <NavLink to={`/${name}`} className={classes.link}>
@@ -118,6 +116,7 @@ const SideBar = (props) => {
     if (props.auth) {
       return (
         <div>
+          <Item name="posts" text="My Posts" />
           <Item name="matches" text="Matches" />
 
           <NavLink to="/" className={classes.link} onClick={props.signoutUser}>

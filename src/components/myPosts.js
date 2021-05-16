@@ -1,7 +1,14 @@
+/* eslint-disable */
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import {
-  Card, CardActions, Button, Typography, CardContent, Divider, Grid, // Container
+  Card,
+  CardActions,
+  Button,
+  Typography,
+  CardContent,
+  Divider,
+  Grid, // Container
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     // backgroundColor: blue[100],
   },
-
 }));
 
 const MyPosts = (props) => {
@@ -29,12 +35,10 @@ const MyPosts = (props) => {
   const classes = useStyles();
 
   function handleDelete(id) {
-    console.log(id);
     props.deletePost(id);
   }
 
   const tutorPosts = props.tutors.map((post) => {
-    // console.log(`Post is: ${post}`);
     return (
       <Card key={post._id} className={classes.root}>
         <CardContent>
@@ -49,7 +53,14 @@ const MyPosts = (props) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => { handleDelete(post._id); }}>Delete</Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleDelete(post._id);
+            }}
+          >
+            Delete
+          </Button>
         </CardActions>
       </Card>
     );
@@ -71,7 +82,14 @@ const MyPosts = (props) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => { handleDelete(post.id); }}>Delete</Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleDelete(post.id);
+            }}
+          >
+            Delete
+          </Button>
         </CardActions>
       </Card>
     );
@@ -80,18 +98,17 @@ const MyPosts = (props) => {
   return (
     <>
       <Typography variant="h4"> Tutor Posts </Typography>
-      <Grid container spacing={24}>
+      <Grid container spacing={1}>
         {tutorPosts}
       </Grid>
       <Divider />
       <Typography variant="h4"> Tutee Posts </Typography>
-      <Grid container spacing={24}>
+      <Grid container spacing={1}>
         {tuteePosts}
       </Grid>
     </>
   );
 };
-
 
 function mapStateToProps(reduxState) {
   return {
@@ -101,4 +118,6 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, { fetchMyPosts, deletePost })(MyPosts));
+export default withRouter(
+  connect(mapStateToProps, { fetchMyPosts, deletePost })(MyPosts)
+);

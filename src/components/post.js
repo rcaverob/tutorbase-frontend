@@ -1,8 +1,14 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  Grid, Modal, Typography, IconButton, Fade, Button,
+  Grid,
+  Modal,
+  Typography,
+  IconButton,
+  Fade,
+  Button,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,17 +56,20 @@ const Post = (props) => {
   };
 
   const setUserID = () => {
-    if (props.post.post) return <Typography variant="h4">{props.username}</Typography>;
+    if (props.post.post)
+      return <Typography variant="h4">{props.username}</Typography>;
     else return <Typography variant="h4">Loading</Typography>;
   };
 
   const setAvailability = () => {
-    if (props.post.post) return <Typography>{props.post.post.availability}</Typography>;
+    if (props.post.post)
+      return <Typography>{props.post.post.availability}</Typography>;
     else return <Typography />;
   };
 
   const setnotes = () => {
-    if (props.post.post) return <Typography>{props.post.post.notes}</Typography>;
+    if (props.post.post)
+      return <Typography>{props.post.post.notes}</Typography>;
     else return <Typography>No notes</Typography>;
   };
 
@@ -76,10 +85,38 @@ const Post = (props) => {
       }}
     >
       <Fade in={props.open}>
-        <Grid container spacing={4} direction="column" justify="space-between" className={classes.modalBody}>
-          <Grid item container spacing={2} direction="row" justify="space-between" alignItems="flex-start">
-            <Grid item xs={11} container spacing={2} direction="row" justify="flex-start">
-              <Grid item xs={9} container spacing={2} direction="column" justify="flex-start" alignItems="flex-start">
+        <Grid
+          container
+          spacing={4}
+          direction="column"
+          justify="space-between"
+          className={classes.modalBody}
+        >
+          <Grid
+            item
+            container
+            spacing={2}
+            direction="row"
+            justify="space-between"
+            alignItems="flex-start"
+          >
+            <Grid
+              item
+              xs={11}
+              container
+              spacing={2}
+              direction="row"
+              justify="flex-start"
+            >
+              <Grid
+                item
+                xs={9}
+                container
+                spacing={2}
+                direction="column"
+                justify="flex-start"
+                alignItems="flex-start"
+              >
                 {setUserID()}
                 {setAvailability()}
               </Grid>
@@ -91,12 +128,29 @@ const Post = (props) => {
             </Grid>
           </Grid>
           <Grid item container spacing={3}>
-            <Grid item container spacing={3} direction="column" justify="center" alignItems="flex-start">
+            <Grid
+              item
+              container
+              spacing={3}
+              direction="column"
+              justify="center"
+              alignItems="flex-start"
+            >
               {setnotes()}
             </Grid>
-            <Grid item container direction="row" justify="flex-end" alignItems="flex-end">
+            <Grid
+              item
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="flex-end"
+            >
               <Grid item>
-                <Button variant="contained" className={classes.submitBtn} onClick={handleClick}>
+                <Button
+                  variant="contained"
+                  className={classes.submitBtn}
+                  onClick={handleClick}
+                >
                   <Typography>request</Typography>
                 </Button>
               </Grid>
