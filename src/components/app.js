@@ -10,6 +10,7 @@ import SignUp from './sign-up';
 import SignIn from './sign-in';
 import MyPosts from './myPosts';
 import Matches from './matches';
+import MyRequests from './MyRequests';
 import Tutors from './tutors';
 import Tutees from './tutees';
 import Fallback from './fallback';
@@ -17,6 +18,15 @@ import Fallback from './fallback';
 // Comment one of the two out based on what you're using
 const ROOT_URL = 'http://localhost:9090/';
 // const ROOT_URL = 'https://tutorbase.herokuapp.com/api';
+
+const withSidebar = (Component) => {
+  const result = () => (
+    <SideBar>
+      <Component />
+    </SideBar>
+  );
+  return result;
+};
 
 const UsersPosts = (props) => {
   return (
@@ -59,6 +69,7 @@ class App extends React.Component {
             <Route path="/tutors" component={Tutors} />
             <Route exact path="/tutees" component={Tutees} />
             <Route exact path="/posts" component={UsersPosts} />
+            <Route exact path="/requests" component={withSidebar(MyRequests)} />
             <Route exact path="/matches" component={UserMatches} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/signup" component={SignUp} />

@@ -118,6 +118,7 @@ const SideBar = (props) => {
         <div>
           <Item name="posts" text="My Posts" />
           <Item name="matches" text="Matches" />
+          <Item name="requests" text="Requests" />
 
           <NavLink to="/" className={classes.link} onClick={props.signoutUser}>
             <ListItem button key="signout">

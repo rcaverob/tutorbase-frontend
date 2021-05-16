@@ -175,7 +175,7 @@ const Matches = (props) => {
 
 function mapStateToProps(reduxState) {
   return {
-    requests: reduxState.matches.requests,
+    requests: reduxState.requests.incomingRequests,
     auth: reduxState.auth.authenticated,
     matches1: reduxState.matches.allMatches,
   };

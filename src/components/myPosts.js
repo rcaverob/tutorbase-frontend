@@ -95,17 +95,30 @@ const MyPosts = (props) => {
     );
   });
 
+  if (props.tutors?.length < 1 && props.tutees?.length < 1) {
+    return <Typography variant="h4">No Posts to Show</Typography>;
+  }
+
   return (
     <>
-      <Typography variant="h4"> Tutor Posts </Typography>
-      <Grid container spacing={1}>
-        {tutorPosts}
-      </Grid>
-      <Divider />
-      <Typography variant="h4"> Tutee Posts </Typography>
-      <Grid container spacing={1}>
-        {tuteePosts}
-      </Grid>
+      {props.tutors?.length > 0 && (
+        <>
+          <Typography variant="h4"> Tutor Posts </Typography>
+          <Grid container spacing={1}>
+            {tutorPosts}
+          </Grid>
+          <Divider style={{ marginTop: '6px', marginBot: '12px' }} />
+        </>
+      )}
+
+      {props.tutees?.length > 0 && (
+        <>
+          <Typography variant="h4"> Tutee Posts </Typography>
+          <Grid container spacing={1}>
+            {tuteePosts}
+          </Grid>
+        </>
+      )}
     </>
   );
 };

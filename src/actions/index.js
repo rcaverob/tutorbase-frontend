@@ -15,7 +15,25 @@ export const ActionTypes = {
   FETCH_MY_TUTOR_POSTS: 'FETCH_MY_TUTOR_POSTS',
   FETCH_MY_TUTEE_POSTS: 'FETCH_MY_TUTEE_POSTS',
   FETCH_REQUESTS: 'FETCH_REQUESTS',
+  FETCH_MY_REQUESTS: 'FETCH_MY_REQUESTS',
   FETCH_MATCHES: 'FETCH_MATCHES',
+  FETCH_MY_REQUESTED_POST_IDS: 'FETCH_MY_REQUESTED_POST_IDS',
+};
+
+const getMyRequestsHelper = (dispatch) => {
+  axios
+    .get(`${ROOT_URL}/myrequests`, {
+      headers: { authorization: localStorage.getItem('token') },
+    })
+    .then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_MY_REQUESTS,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export function fetchPosts(type, options) {
@@ -121,7 +139,7 @@ export function sendTRequest(request, type) {
   };
 }
 
-// function that will fetch all pending requests
+// fetch requests made to the user
 export function receiveTRequest() {
   return (dispatch) => {
     axios
@@ -137,6 +155,32 @@ export function receiveTRequest() {
       });
   };
 }
+
+// fetch requests made by the user
+export function getMyRequests() {
+  return (dispatch) => {
+    getMyRequestsHelper(dispatch);
+  };
+}
+
+// fetch ids of posts for which the user requested to be matched
+// export function getMyRequestedPostIDs() {
+//   return (dispatch) => {
+//     axios
+//       .get(`${ROOT_URL}/requestedpostids`, {
+//         headers: { authorization: localStorage.getItem('token') },
+//       })
+//       .then((response) => {
+//         dispatch({
+//           type: ActionTypes.FETCH_MY_REQUESTED_POST_IDS,
+//           payload: response.data,
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+// }
 
 // will accept the requests
 export function acceptRequest(accept) {
@@ -220,7 +264,7 @@ export function signinUser({ email, password }, history) {
     axios
       .post(`${ROOT_URL}/signin`, { email, password })
       .then((response) => {
-        console.log(response.data.user);
+        getMyRequestsHelper(dispatch);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
