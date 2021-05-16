@@ -1,15 +1,26 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
-  Card, CardActions, Button, Typography, CardContent, Divider, Grid, // Container
+  Card,
+  CardActions,
+  Button,
+  Typography,
+  CardContent,
+  Divider,
+  Grid, // Container
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 // import { blue } from '@material-ui/core/colors';
 import {
-  receiveTRequest, acceptRequest, declineRequest, getMatches, fetchPost, clearMatches,
+  receiveTRequest,
+  acceptRequest,
+  declineRequest,
+  getMatches,
+  fetchPost,
+  clearMatches,
 } from '../actions/index';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,11 +31,9 @@ const useStyles = makeStyles((theme) => ({
   container: {
     // backgroundColor: blue[100],
   },
-
 }));
 
-
-const Matche = (props) => {
+const Matches = (props) => {
   useEffect(() => {
     if (!props.auth) props.history.push('/signin');
   });
@@ -47,10 +56,8 @@ const Matche = (props) => {
     props.acceptRequest(accept);
   }
 
-
   function handleDecline(request) {
     props.declineRequest(request.id);
-    console.log('Decline');
   }
 
   const Requests = props.requests.map((request) => {
@@ -69,11 +76,24 @@ const Matche = (props) => {
           <Typography variant="h6" component="p">
             Year: {request.requester.year}
           </Typography>
-
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => { handleAccept(request); }}>Accept</Button>
-          <Button size="small" onClick={() => { handleDecline(request); }}>Decline</Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleAccept(request);
+            }}
+          >
+            Accept
+          </Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleDecline(request);
+            }}
+          >
+            Decline
+          </Button>
         </CardActions>
       </Card>
     );
@@ -129,7 +149,7 @@ const Matche = (props) => {
       });
       return (
         <div>
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             {allMatches}
           </Grid>
         </div>
@@ -143,18 +163,15 @@ const Matche = (props) => {
     <>
       <Divider />
       <Typography variant="h4"> Requests </Typography>
-      <Grid container spacing={24}>
+      <Grid container spacing={1}>
         {Requests}
       </Grid>
       <Divider />
       <Typography variant="h4"> Matches </Typography>
       {loadMatches()}
     </>
-
-
   );
 };
-
 
 function mapStateToProps(reduxState) {
   return {
@@ -164,6 +181,13 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, {
-  receiveTRequest, acceptRequest, declineRequest, getMatches, fetchPost, clearMatches,
-})(Matche));
+export default withRouter(
+  connect(mapStateToProps, {
+    receiveTRequest,
+    acceptRequest,
+    declineRequest,
+    getMatches,
+    fetchPost,
+    clearMatches,
+  })(Matches)
+);

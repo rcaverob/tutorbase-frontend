@@ -8,7 +8,6 @@ import CreatePost from './createpost';
 import Posts from './posts';
 
 const useStyles = makeStyles((theme) => ({
-
   button: {
     color: 'white',
     backgroundColor: '#19AA6E',
@@ -24,10 +23,27 @@ const Tutors = (props) => {
   const [open, setOpen] = React.useState(false);
 
   const requestFormButton = () => {
-    console.log(props.auth);
-    return (props.auth
-      ? (<Button className={classes.button} onClick={() => { setOpen(true); }} variant="contained">Get a Tutee</Button>)
-      : <Button className={classes.button} onClick={() => { props.history.push('/signin'); }} variant="contained">Get a Tutee</Button>);
+    return props.auth ? (
+      <Button
+        className={classes.button}
+        onClick={() => {
+          setOpen(true);
+        }}
+        variant="contained"
+      >
+        Get a Tutee
+      </Button>
+    ) : (
+      <Button
+        className={classes.button}
+        onClick={() => {
+          props.history.push('/signin');
+        }}
+        variant="contained"
+      >
+        Get a Tutee
+      </Button>
+    );
   };
 
   return (
@@ -36,7 +52,13 @@ const Tutors = (props) => {
         <div>
           <h1>We help students with their learning</h1>
           {requestFormButton()}
-          <CreatePost isTutor open={open} handleClose={() => { setOpen(false); }} />
+          <CreatePost
+            isTutor
+            open={open}
+            handleClose={() => {
+              setOpen(false);
+            }}
+          />
         </div>
         <Posts isTutor mode="tutors" />
       </SideBar>

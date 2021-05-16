@@ -1,7 +1,8 @@
+/* eslint-disable */
 import axios from 'axios';
 
 // API URLs - localhost for testing and heroku for the real deal
-// const ROOT_URL = 'https://tutorbase.herokuapp.com/api'; // Heroku back-end/db
+// const ROOT_URL = 'https://tutor-base.herokuapp.com/api'; // Heroku back-end/db
 const ROOT_URL = 'http://localhost:9090/api'; // Local back-end/db
 
 export const ActionTypes = {
@@ -45,8 +46,6 @@ export function fetchMyPosts(type) {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        // console.log('Got My Posts Response');
-        // console.log(response);
         dispatch({ type: action, payload: response.data });
       })
       .catch((error) => {
@@ -74,14 +73,12 @@ export function fetchPost(id) {
 }
 
 export function addPost(post, type) {
-  console.log(post);
   return (dispatch) => {
     axios
       .post(`${ROOT_URL}/${type}`, post, {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        console.log('success');
         dispatch(fetchPosts(type, 'Grouped'));
       })
       .catch((error) => {
@@ -98,8 +95,6 @@ export function deletePost(postID) {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        console.log('success');
-        console.log(response);
         dispatch(fetchMyPosts('tutors'));
         dispatch(fetchMyPosts('tutees'));
       })
@@ -118,7 +113,6 @@ export function sendTRequest(request, type) {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        console.log(response);
         console.log(`successfully sent ${type} request`);
       })
       .catch((error) => {
@@ -129,14 +123,12 @@ export function sendTRequest(request, type) {
 
 // function that will fetch all pending requests
 export function receiveTRequest() {
-  console.log('receive');
   return (dispatch) => {
     axios
       .get(`${ROOT_URL}/requests`, {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        console.log(response);
         dispatch({ type: ActionTypes.FETCH_REQUESTS, payload: response.data });
       })
       .catch((error) => {
@@ -155,7 +147,6 @@ export function acceptRequest(accept) {
       })
       .then((response) => {
         dispatch(receiveTRequest());
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -172,7 +163,6 @@ export function declineRequest(id) {
       })
       .then((response) => {
         dispatch(receiveTRequest());
-        console.log('declined!');
         console.log(response);
       })
       .catch((error) => {
@@ -208,7 +198,6 @@ export function clearMatches() {
       })
       .then((response) => {
         dispatch(getMatches());
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -221,6 +210,7 @@ export function clearMatches() {
 export function signoutUser() {
   return (dispatch) => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     dispatch({ type: ActionTypes.DEAUTH_USER });
   };
 }
@@ -230,14 +220,14 @@ export function signinUser({ email, password }, history) {
     axios
       .post(`${ROOT_URL}/signin`, { email, password })
       .then((response) => {
-        console.log(response);
-        dispatch({ type: ActionTypes.AUTH_USER });
+        console.log(response.data.user);
+        dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         history.push('/');
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, error });
-        // history.push('/');
       });
   };
 }
@@ -245,6 +235,7 @@ export function signinUser({ email, password }, history) {
 // eslint-disable-next-line object-curly-newline
 export function signupUser({ name, year, email, password }, history) {
   return (dispatch) => {
+    console.log('!! Signing up User');
     // eslint-disable-next-line object-curly-newline
     axios
       .post(`${ROOT_URL}/signup`, {
@@ -254,8 +245,11 @@ export function signupUser({ name, year, email, password }, history) {
         password,
       })
       .then((response) => {
-        dispatch({ type: ActionTypes.AUTH_USER });
+        console.log('USR SGNUP IS: ');
+        console.log(response.data.user);
+        dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         history.push('/');
       })
       .catch((error) => {
