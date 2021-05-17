@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 // API URLs - localhost for testing and heroku for the real deal
-// const ROOT_URL = 'https://tutor-base.herokuapp.com/api'; // Heroku back-end/db
-const ROOT_URL = 'http://localhost:9090/api'; // Local back-end/db
+const ROOT_URL = 'https://tutor-base.herokuapp.com/api'; // Heroku back-end/db
+// const ROOT_URL = 'http://localhost:9090/api'; // Local back-end/db
 
 export const ActionTypes = {
   FETCH_POST: 'FETCH_POST',
