@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const env = process.env.NODE_ENV || 'production';
+const env = process.env.NODE_ENV || 'development';
 // set to 'production' or 'development' in your env
 
 const finalCSSLoader =

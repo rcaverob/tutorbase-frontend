@@ -8,9 +8,9 @@
   "scripts": {
     "start": "SET NODE_ENV=development& webpack-dev-server",
     "test": "eslint src/**.js",
-    "build": "yarn clean; SET WEBPACK_ENV=production& webpack --colors",
+    "build": "yarn rimraf; SET WEBPACK_ENV=production& webpack --colors",
     "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors",
-    "clean": "node_modules/.bin/rimraf dist",
+    "rimraf": "./node_modules/rimraf/bin.js",
     "deploy": "yarn build; surge -p dist -d tutor_base.surge.sh; yarn clean"
   },
   "devDependencies": {
