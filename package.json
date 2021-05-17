@@ -8,7 +8,8 @@
   "scripts": {
     "start": "SET NODE_ENV=development& webpack-dev-server",
     "test": "eslint src/**.js",
-    "build": "rimraf; SET WEBPACK_ENV=production& webpack --colors",
+    "clean": "rimraf node_modules",
+    "build": "cross-env WEBPACK_ENV=production & webpack --colors",
     "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors",
     "deploy": "yarn build; surge -p dist -d tutor_base.surge.sh; yarn clean"
   },
@@ -46,6 +47,7 @@
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
+    "cross-env": "^7.0.3",
     "jquery": "^3.5.0",
     "lodash.debounce": "^4.0.8",
     "react": "^16.13.1",
