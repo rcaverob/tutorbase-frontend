@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -8,7 +9,6 @@ import SideBar from './sideBar';
 import CreatePost from './createpost';
 
 const useStyles = makeStyles((theme) => ({
-
   button: {
     color: 'white',
     background: '#19AA6E',
@@ -24,9 +24,21 @@ const Tutees = (props) => {
 
   const requestFormButton = () => {
     const classes = useStyles();
-    return (props.auth
-      ? (<Button className={classes.button} onClick={() => { setNewPost(true); }} variant="contained">Get a Tutor</Button>)
-      : (<Button variant="contained" onClick={props.history.push('/signin')}>Get a Tutor</Button>));
+    return props.auth ? (
+      <Button
+        className={classes.button}
+        onClick={() => {
+          setNewPost(true);
+        }}
+        variant="contained"
+      >
+        Get a Tutor
+      </Button>
+    ) : (
+      <Button variant="contained" onClick={props.history.push('/signin')}>
+        Get a Tutor
+      </Button>
+    );
   };
 
   return (
@@ -35,7 +47,13 @@ const Tutees = (props) => {
         <div>
           <h1>We need help learning</h1>
           {requestFormButton()}
-          <CreatePost open={newPost} handleClose={() => { setNewPost(false); }} isTutor={false} />
+          <CreatePost
+            open={newPost}
+            handleClose={() => {
+              setNewPost(false);
+            }}
+            isTutor={false}
+          />
         </div>
         <Posts mode="tutees" />
       </SideBar>

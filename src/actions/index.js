@@ -125,13 +125,13 @@ export function deletePost(postID) {
 
 // function to send request to either tutor or tutee
 export function sendTRequest(request, type) {
-  return () => {
+  return (dispatch) => {
     axios
       .post(`${ROOT_URL}/${type}Req`, request, {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        console.log(`successfully sent ${type} request`);
+        dispatch(getMyRequests());
       })
       .catch((error) => {
         console.log(error);
@@ -163,25 +163,6 @@ export function getMyRequests() {
   };
 }
 
-// fetch ids of posts for which the user requested to be matched
-// export function getMyRequestedPostIDs() {
-//   return (dispatch) => {
-//     axios
-//       .get(`${ROOT_URL}/requestedpostids`, {
-//         headers: { authorization: localStorage.getItem('token') },
-//       })
-//       .then((response) => {
-//         dispatch({
-//           type: ActionTypes.FETCH_MY_REQUESTED_POST_IDS,
-//           payload: response.data,
-//         });
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-// }
-
 // will accept the requests
 export function acceptRequest(accept) {
   return (dispatch) => {
@@ -207,7 +188,6 @@ export function declineRequest(id) {
       })
       .then((response) => {
         dispatch(receiveTRequest());
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -279,7 +259,6 @@ export function signinUser({ email, password }, history) {
 // eslint-disable-next-line object-curly-newline
 export function signupUser({ name, year, email, password }, history) {
   return (dispatch) => {
-    console.log('!! Signing up User');
     // eslint-disable-next-line object-curly-newline
     axios
       .post(`${ROOT_URL}/signup`, {
@@ -289,14 +268,13 @@ export function signupUser({ name, year, email, password }, history) {
         password,
       })
       .then((response) => {
-        console.log('USR SGNUP IS: ');
-        console.log(response.data.user);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         history.push('/');
       })
       .catch((error) => {
+        console.log(error);
         history.push('/');
       });
   };

@@ -1,10 +1,11 @@
+/* eslint-disable */
+
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Grid, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-
   content: {
     background: 'white',
     width: '90%',
@@ -34,9 +35,22 @@ const useStyles = makeStyles((theme) => ({
 const Fallback = (props) => {
   const classes = useStyles();
   return (
-    <Grid className={classes.content} container direction="column" justify="center" alignItems="center">
-      <Typography variant="h2" className={classes.h2}>URL not found.</Typography>
-      <Button onClick={() => { props.history.push('/'); }} className={classes.button}>
+    <Grid
+      className={classes.content}
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+    >
+      <Typography variant="h2" className={classes.h2}>
+        URL not found.
+      </Typography>
+      <Button
+        onClick={() => {
+          props.history.push('/');
+        }}
+        className={classes.button}
+      >
         <Typography variant="h5">Back to Homepage</Typography>
       </Button>
     </Grid>

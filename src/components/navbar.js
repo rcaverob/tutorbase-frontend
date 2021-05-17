@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';

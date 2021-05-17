@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { MenuItem, TextField } from '@material-ui/core';
 
@@ -15,10 +16,7 @@ const DropdownMenu = (props) => {
       fullWidth
     >
       {props.options.map((option) => (
-        <MenuItem
-          key={option}
-          value={option}
-        >
+        <MenuItem key={option} value={option}>
           {option}
         </MenuItem>
       ))}

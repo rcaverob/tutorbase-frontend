@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import {
@@ -67,7 +68,6 @@ const MyPosts = (props) => {
   });
 
   const tuteePosts = props.tutees.map((post) => {
-    console.log(`Post is: ${post}`);
     return (
       <Card key={post._id} className={classes.root}>
         <CardContent>

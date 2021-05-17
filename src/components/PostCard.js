@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   btnLink: {
+    color: 'white',
     textDecoration: 'none',
   },
 }));

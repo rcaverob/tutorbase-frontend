@@ -1,11 +1,19 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  CssBaseline, TextField, Typography, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel,
-}
-  from '@material-ui/core';
+  CssBaseline,
+  TextField,
+  Typography,
+  Button,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from '@material-ui/core';
 
 import DropDownMenu from './dropdownmenu';
 
@@ -32,10 +40,8 @@ const Profile = (props) => {
   const classes = useStyles();
   // const history = useHistory();
   useEffect(() => {
-    console.log(props.history);
     if (!props.auth) props.history.push('/signin');
   });
-
 
   const sports = ['N/A', 'Baseball', 'Basketball', 'Heavyweight Crew'];
 
@@ -50,19 +56,23 @@ const Profile = (props) => {
     setSportError(false);
   };
 
-  const handleClick = () => {
-    console.log('Finalized Profile');
-  };
+  const handleClick = () => {};
 
   return (
     <div>
       <CssBaseline />
-      <Typography variant="h3" gutterBottom>Finalize your profile!</Typography>
-
+      <Typography variant="h3" gutterBottom>
+        Finalize your profile!
+      </Typography>
 
       <FormControl component="fieldset">
         <FormLabel component="legend">Gender</FormLabel>
-        <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+        <RadioGroup
+          aria-label="gender"
+          name="gender1"
+          value={value}
+          onChange={handleChange}
+        >
           <FormControlLabel value="female" control={<Radio />} label="Female" />
           <FormControlLabel value="male" control={<Radio />} label="Male" />
           <FormControlLabel value="other" control={<Radio />} label="Other" />
@@ -70,13 +80,42 @@ const Profile = (props) => {
       </FormControl>
       <FormControl component="fieldset">
         <FormLabel component="legend">Ethnicity</FormLabel>
-        <RadioGroup aria-label="ethncity" name="ethnicity1" value={value2} onChange={handleEthncity}>
-          <FormControlLabel value="black" control={<Radio />} label="African/African-American/Black" />
-          <FormControlLabel value="asian" control={<Radio />} label="Asian/Pacific Islander/Asian-American" />
-          <FormControlLabel value="hispanic" control={<Radio />} label="Hispanic/Latinx" />
-          <FormControlLabel value="native" control={<Radio />} label="Native American" />
-          <FormControlLabel value="white" control={<Radio />} label="White/Caucasian" />
-          <FormControlLabel value="multi" control={<Radio />} label="Multiracial" />
+        <RadioGroup
+          aria-label="ethncity"
+          name="ethnicity1"
+          value={value2}
+          onChange={handleEthncity}
+        >
+          <FormControlLabel
+            value="black"
+            control={<Radio />}
+            label="African/African-American/Black"
+          />
+          <FormControlLabel
+            value="asian"
+            control={<Radio />}
+            label="Asian/Pacific Islander/Asian-American"
+          />
+          <FormControlLabel
+            value="hispanic"
+            control={<Radio />}
+            label="Hispanic/Latinx"
+          />
+          <FormControlLabel
+            value="native"
+            control={<Radio />}
+            label="Native American"
+          />
+          <FormControlLabel
+            value="white"
+            control={<Radio />}
+            label="White/Caucasian"
+          />
+          <FormControlLabel
+            value="multi"
+            control={<Radio />}
+            label="Multiracial"
+          />
           <FormControlLabel value="other" control={<Radio />} label="Other" />
         </RadioGroup>
       </FormControl>
@@ -88,9 +127,17 @@ const Profile = (props) => {
         onChange={changeSport}
       />
       <form className={classes.root} noValidate autoComplete="off">
-        <TextField id="outlined-basic" label="Enter Greek Affiliation" variant="outlined" />
+        <TextField
+          id="outlined-basic"
+          label="Enter Greek Affiliation"
+          variant="outlined"
+        />
       </form>
-      <Button variant="contained" className={classes.submitBtn} onClick={handleClick}>
+      <Button
+        variant="contained"
+        className={classes.submitBtn}
+        onClick={handleClick}
+      >
         <Typography>Create Profile</Typography>
       </Button>
     </div>

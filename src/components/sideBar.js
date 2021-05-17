@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { connect } from 'react-redux';
 import { NavLink, withRouter, useLocation } from 'react-router-dom';
 // we need to import signout from the actions;
@@ -117,8 +118,9 @@ const SideBar = (props) => {
       return (
         <div>
           <Item name="posts" text="My Posts" />
+          <Item name="requests" text="My Requests" />
+          <Item name="incomingrequests" text="Incoming Requests" />
           <Item name="matches" text="Matches" />
-          <Item name="requests" text="Requests" />
 
           <NavLink to="/" className={classes.link} onClick={props.signoutUser}>
             <ListItem button key="signout">

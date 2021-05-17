@@ -1,9 +1,7 @@
 /* eslint-disable */
-
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-
 import {
   Card,
   CardActions,
@@ -15,7 +13,12 @@ import {
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { getMyRequests } from '../actions/index';
+
+import {
+  receiveTRequest,
+  acceptRequest,
+  declineRequest,
+} from '../actions/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,18 +27,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyRequests = (props) => {
+const IncomingRequests = (props) => {
   useEffect(() => {
     if (!props.auth) props.history.push('/signin');
   });
 
   useEffect(() => {
-    props.getMyRequests();
-
-    // You can uncomment the line below, in order to fix a crash upon pressing the Matches tab
-    // props.clearMatches();
+    props.receiveTRequest();
   }, []);
   const classes = useStyles();
+
+  function handleAccept(request) {
+    const accept = {
+      requestID: request.id,
+      requesterID: request.requester.id,
+    };
+
+    props.acceptRequest(accept);
+  }
+
+  function handleDecline(request) {
+    props.declineRequest(request.id);
+  }
 
   const Requests = props.requests.map((request) => {
     return (
@@ -48,14 +61,13 @@ const MyRequests = (props) => {
             Class: {request.postID.department} {request.postID.class}
           </Typography>
           <Typography variant="h6" component="p">
-            Name: {request.userID.name}
+            Requester: {request.requester.name}
           </Typography>
           <Typography variant="h6" component="p">
-            Year: {request.userID.year}
+            Year: {request.requester.year}
           </Typography>
         </CardContent>
-
-        {/* <CardActions>
+        <CardActions>
           <Button
             size="small"
             onClick={() => {
@@ -72,16 +84,16 @@ const MyRequests = (props) => {
           >
             Decline
           </Button>
-        </CardActions> */}
+        </CardActions>
       </Card>
     );
   });
 
   return (
     <>
-      <Typography variant="h4">Pending Requests</Typography>
+      <Typography variant="h4">Incoming Requests</Typography>
       <Typography variant="h6" style={{ marginTop: '5px' }}>
-        These are the requests you made
+        These people requested to be matched with you
       </Typography>
       <Divider style={{ margin: 5 }} />
       <Grid container spacing={1}>
@@ -93,13 +105,15 @@ const MyRequests = (props) => {
 
 function mapStateToProps(reduxState) {
   return {
-    requests: reduxState.requests.myRequests,
+    requests: reduxState.requests.incomingRequests,
     auth: reduxState.auth.authenticated,
   };
 }
 
 export default withRouter(
   connect(mapStateToProps, {
-    getMyRequests,
-  })(MyRequests)
+    receiveTRequest,
+    acceptRequest,
+    declineRequest,
+  })(IncomingRequests)
 );
