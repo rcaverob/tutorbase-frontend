@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+/* eslint-disable */
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import withStyles from 'react-jss';
 import { signinUser } from '../actions';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = {
+const useStyles = makeStyles((theme) => ({
   page: {
     background: '#F7F7F8',
     width: '100vw',
@@ -20,6 +21,9 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '500px',
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
   },
   signIn: {
     background: 'white',
@@ -31,6 +35,11 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '4px 4px 20px rgba(0, 0, 0, 0.25)',
     borderTop: 'solid 15px #19AA6E',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      height: '100%',
+      padding: 0,
+    },
   },
   deleteSubmit: {
     marginTop: 20,
@@ -51,6 +60,11 @@ const styles = {
     input: {
       width: '400px',
       height: '26px',
+      [theme.breakpoints.down('xs')]: {
+        width: 'auto',
+        margin: '10px 14px',
+        flex: 1,
+      },
     },
     h1: {
       color: '#19AA6E',
@@ -74,58 +88,89 @@ const styles = {
       },
     },
   },
-};
+}));
 
-class SignInForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editEmail: '',
-      editPassword: '',
-      error: '',
-    };
-  }
+const SignInForm = (props) => {
+  const [state, setState] = useState({
+    editEmail: '',
+    editPassword: '',
+    error: '',
+  });
 
-  signIn = (event) => {
-    if (!this.state.editPassword || !this.state.editEmail) this.setState({ error: 'Please provide an email and password to sign in!' });
-    else if (!this.state.editEmail.toLowerCase().includes('@dartmouth.edu')) this.setState({ error: 'Users must have a valid dartmouth.edu email' });
+  const signIn = (event) => {
+    if (!state.editPassword || !state.editEmail)
+      setState({
+        ...state,
+        error: 'Please provide an email and password to sign in!',
+      });
+    else if (!state.editEmail.toLowerCase().includes('@dartmouth.edu'))
+      setState({
+        ...state,
+        error: 'Users must have a valid dartmouth.edu email',
+      });
     else {
       event.preventDefault(); // prevent page reload on submit
       const User = {
-        email: this.state.editEmail,
-        password: this.state.editPassword,
+        email: state.editEmail,
+        password: state.editPassword,
       };
-      this.props.signinUser(User, this.props.history);
-      if (!this.props.auth && this.props.authError) this.setState({ error: 'Invalid Credentials' });
+      props.signinUser(User, props.history);
+      if (!props.auth && props.authError)
+        setState({ ...state, error: 'Invalid Credentials' });
     }
-  }
+  };
 
-  render() {
-    const { classes } = this.props;
+  const classes = useStyles();
 
-    return (
-      <div className={classes.page}>
-        <form className={classes.signIn}>
-          <h1>Sign in!</h1>
-          <p className={classes.error}>{this.state.error}</p>
-          <div className={classes.section}>
-            <p>Email</p>
-            <input onChange={(event) => { this.setState({ editEmail: event.target.value }); }} value={this.state.editEmail} />
-          </div>
-          <div className={classes.section}>
-            <p>Password</p>
-            <input type="password" onChange={(event) => { this.setState({ editPassword: event.target.value }); }} value={this.state.editPassword} />
-          </div>
-          <div className={classes.deleteSubmit}>
-            <button onClick={() => { this.props.history.push('/'); }} type="button" tabIndex={0}>Back</button>
-            <button onClick={this.signIn} type="button" tabIndex={0}>Submit</button>
-          </div>
-        </form>
-        <p>Don&#39;t have an account? <Link to="/signup" className={classes.link}> Sign up!</Link></p>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes.page}>
+      <form className={classes.signIn}>
+        <h1>Sign in!</h1>
+        <p className={classes.error}>{state.error}</p>
+        <div className={classes.section}>
+          <p style={{ marginRight: '32px' }}>Email</p>
+          <input
+            onChange={(event) => {
+              setState({ ...state, editEmail: event.target.value });
+            }}
+            value={state.editEmail}
+          />
+        </div>
+        <div className={classes.section}>
+          <p>Password</p>
+          <input
+            type="password"
+            onChange={(event) => {
+              setState({ ...state, editPassword: event.target.value });
+            }}
+            value={state.editPassword}
+          />
+        </div>
+        <div className={classes.deleteSubmit}>
+          <button
+            onClick={() => {
+              props.history.push('/');
+            }}
+            type="button"
+            tabIndex={0}
+          >
+            Back
+          </button>
+          <button onClick={signIn} type="button" tabIndex={0}>
+            Submit
+          </button>
+        </div>
+      </form>
+      {/* <p>
+        Don&#39;t have an account?{' '}
+        <Link to="/signup" className={classes.link}>
+          {' '}
+          Sign up!
+        </Link>
+      </p> */}
+    </div>
+  );
+};
 
 function mapStateToProps(reduxState) {
   return {
@@ -134,4 +179,4 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, { signinUser })(withStyles(styles)(SignInForm)));
+export default withRouter(connect(mapStateToProps, { signinUser })(SignInForm));

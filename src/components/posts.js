@@ -1,26 +1,20 @@
 /* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {
-  Paper,
-  Typography,
-  Button,
-  Divider,
-  Container,
-  TextField,
-} from '@material-ui/core';
+import { Typography, Divider, Container, TextField } from '@material-ui/core';
 
 import Carousel, { consts } from 'react-elastic-carousel';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Post from './post';
-// import { blue } from '@material-ui/core/colors';
-import { fetchPosts, sendTRequest } from '../actions/index';
+import { fetchPosts, sendTRequest, getMyRequests } from '../actions/index';
 import favicon from '../img/favicon.ico';
+import PostCard from './PostCard';
+import { useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 300,
+    minWidth: 270,
   },
   arrow: {
     display: 'flex',
@@ -32,18 +26,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '50px',
     cursor: 'pointer',
     outline: 'none',
-  },
-  container: {
-    // backgroundColor: blue[100],
-  },
-  submitBtn: {
-    borderRadius: '50px',
-    background: 'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
-    color: 'white',
-  },
-  btnLink: {
-    textDecoration: 'none',
-    color: 'white',
   },
   carousel: {
     border: 'none',
@@ -61,12 +43,17 @@ const Posts = (props) => {
     { width: 620, itemsToShow: 2 },
     { width: 950, itemsToShow: 3 },
   ]);
+
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('xs'));
+
   useEffect(() => {
-    // Your code here
     if (!mode) {
       mode = 'tutors';
     }
     props.fetchPosts(mode, 'Grouped');
+    if (props.auth) {
+      props.getMyRequests();
+    }
   }, []);
 
   function changeSearch(val) {
@@ -106,34 +93,6 @@ const Posts = (props) => {
     );
   });
 
-  // Loads "Request" button and links based on auth (request and go to reqs if auth, otherwise login page)
-  const requestButton = (post) => {
-    if (!props.auth)
-      return (
-        <Button size="small" variant="contained" className={classes.submitBtn}>
-          <Link to="/signin" className={classes.btnLink}>
-            Request
-          </Link>
-        </Button>
-      );
-
-    const alreadyRequested = props.currentUser.requestedPostIDs;
-    console.log('ALREADY REQ: !!!!');
-    console.log(alreadyRequested);
-    return (
-      <Button
-        size="small"
-        variant="contained"
-        className={classes.submitBtn}
-        onClick={() => {
-          handleRequest(post.userID, post.postID);
-        }}
-      >
-        Request
-      </Button>
-    );
-  };
-
   const setPostModalInfo = (postID, username) => {
     setPostID(postID);
     setUserName(username);
@@ -154,36 +113,24 @@ const Posts = (props) => {
     });
     const postItems = filteredStudents.map((post) => {
       curKey += 1;
+      const buttonIsDisabled =
+        props.requestedPostIDs.indexOf(post.postID) !== -1;
       return (
-        <Paper
-          elevation={3}
-          style={{ margin: '20px', padding: '10px' }}
+        <PostCard
           key={curKey}
-          className={classes.root}
-        >
-          <div
-            onClick={() => {
-              setPostModalInfo(post.postID, post.user.name);
-            }}
-          >
-            <Typography variant="h5" component="h2">
-              {post.user.name}
-            </Typography>
-            <Typography variant="h6" component="h2">
-              Year: {post.user.year}
-            </Typography>
-            <Typography variant="body2" component="p">
-              Availability: {post.availability}
-            </Typography>
-          </div>
-          <div>{requestButton(post)}</div>
-        </Paper>
+          post={post}
+          disabledButton={buttonIsDisabled}
+          setPostModalInfo={setPostModalInfo}
+          handleRequest={handleRequest}
+        />
       );
     });
+
     return (
-      <Container className={classes.container} key={curKey}>
+      <Container key={curKey}>
         <Typography variant="h4"> {dept._id} </Typography>
         <Carousel
+          showArrows={!isSmallScreen}
           renderArrow={({ type, onClick }) => {
             return (
               <div
@@ -218,6 +165,7 @@ const Posts = (props) => {
         handleClose={() => {
           editModal(false);
         }}
+        buttonIsDisabled={props.requestedPostIDs.indexOf(currentPostID) !== -1}
         id={currentPostID}
         username={userName}
       />
@@ -241,8 +189,12 @@ function mapStateToProps(reduxState) {
   return {
     posts: reduxState.posts.all,
     auth: reduxState.auth.authenticated,
-    currentUser: reduxState.auth.currentUser,
+    requestedPostIDs: reduxState.requests.requestedPostIDs,
   };
 }
 
-export default connect(mapStateToProps, { fetchPosts, sendTRequest })(Posts);
+export default connect(mapStateToProps, {
+  fetchPosts,
+  sendTRequest,
+  getMyRequests,
+})(Posts);

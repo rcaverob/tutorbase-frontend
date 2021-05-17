@@ -5,7 +5,6 @@ const initialState = {
   allMatches: [],
 };
 
-
 const matchesReducer = (state = initialState, action) => {
   switch (action.type) {
     // case ActionTypes.FETCH_POST:

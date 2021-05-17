@@ -15,7 +15,25 @@ export const ActionTypes = {
   FETCH_MY_TUTOR_POSTS: 'FETCH_MY_TUTOR_POSTS',
   FETCH_MY_TUTEE_POSTS: 'FETCH_MY_TUTEE_POSTS',
   FETCH_REQUESTS: 'FETCH_REQUESTS',
+  FETCH_MY_REQUESTS: 'FETCH_MY_REQUESTS',
   FETCH_MATCHES: 'FETCH_MATCHES',
+  FETCH_MY_REQUESTED_POST_IDS: 'FETCH_MY_REQUESTED_POST_IDS',
+};
+
+const getMyRequestsHelper = (dispatch) => {
+  axios
+    .get(`${ROOT_URL}/myrequests`, {
+      headers: { authorization: localStorage.getItem('token') },
+    })
+    .then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_MY_REQUESTS,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export function fetchPosts(type, options) {
@@ -107,13 +125,13 @@ export function deletePost(postID) {
 
 // function to send request to either tutor or tutee
 export function sendTRequest(request, type) {
-  return () => {
+  return (dispatch) => {
     axios
       .post(`${ROOT_URL}/${type}Req`, request, {
         headers: { authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        console.log(`successfully sent ${type} request`);
+        dispatch(getMyRequests());
       })
       .catch((error) => {
         console.log(error);
@@ -121,7 +139,7 @@ export function sendTRequest(request, type) {
   };
 }
 
-// function that will fetch all pending requests
+// fetch requests made to the user
 export function receiveTRequest() {
   return (dispatch) => {
     axios
@@ -135,6 +153,13 @@ export function receiveTRequest() {
         console.log(error);
         // dispatch({ type: ActionTypes.ERROR_SET, error });
       });
+  };
+}
+
+// fetch requests made by the user
+export function getMyRequests() {
+  return (dispatch) => {
+    getMyRequestsHelper(dispatch);
   };
 }
 
@@ -163,7 +188,6 @@ export function declineRequest(id) {
       })
       .then((response) => {
         dispatch(receiveTRequest());
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -220,7 +244,7 @@ export function signinUser({ email, password }, history) {
     axios
       .post(`${ROOT_URL}/signin`, { email, password })
       .then((response) => {
-        console.log(response.data.user);
+        getMyRequestsHelper(dispatch);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -235,7 +259,6 @@ export function signinUser({ email, password }, history) {
 // eslint-disable-next-line object-curly-newline
 export function signupUser({ name, year, email, password }, history) {
   return (dispatch) => {
-    console.log('!! Signing up User');
     // eslint-disable-next-line object-curly-newline
     axios
       .post(`${ROOT_URL}/signup`, {
@@ -245,14 +268,13 @@ export function signupUser({ name, year, email, password }, history) {
         password,
       })
       .then((response) => {
-        console.log('USR SGNUP IS: ');
-        console.log(response.data.user);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data.user });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         history.push('/');
       })
       .catch((error) => {
+        console.log(error);
         history.push('/');
       });
   };

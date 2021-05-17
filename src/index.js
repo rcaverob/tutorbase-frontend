@@ -7,9 +7,11 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import App from './components/app';
 import { ActionTypes } from './actions';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import { green } from '@material-ui/core/colors';
 
 // this creates the store with the reducers, and does some other stuff to initialize devtools
-// boilerplate to copy, don't have to know
 const store = createStore(
   reducers,
   {},
@@ -21,19 +23,31 @@ const store = createStore(
   )
 );
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: green[600],
+    },
+    secondary: {
+      main: '#70D27E',
+    },
+  },
+});
+
 const token = localStorage.getItem('token');
 if (token) {
   const user = JSON.parse(localStorage.getItem('user'));
-  if (!user) {
-    console.log('Error getting user from local storage');
+  if (user) {
+    store.dispatch({ type: ActionTypes.AUTH_USER, payload: user });
   }
-  store.dispatch({ type: ActionTypes.AUTH_USER, payload: user });
 }
 
 // we now wrap App in a Provider
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('main')
 );

@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -29,8 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submitBtn: {
     borderRadius: '50px',
-    background: 'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
     color: 'white',
+    background: (props) =>
+      props.buttonIsDisabled
+        ? 'gray'
+        : 'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
   },
   backDrop: {
     background: 'rgba(0,255,255,0.2)',
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Post = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const history = useHistory();
 
   useEffect(() => {
@@ -147,6 +151,7 @@ const Post = (props) => {
             >
               <Grid item>
                 <Button
+                  disabled={props.buttonIsDisabled}
                   variant="contained"
                   className={classes.submitBtn}
                   onClick={handleClick}

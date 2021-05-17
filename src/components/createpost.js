@@ -1,7 +1,15 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
-  Grid, Modal, Typography, IconButton, TextField, Button, Fade,
+  Grid,
+  Modal,
+  Typography,
+  IconButton,
+  TextField,
+  Button,
+  Fade,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,7 +66,8 @@ const CreatePost = (props) => {
   }, [department]);
 
   useEffect(() => {
-    if (classNum === '' || classNum === 'Select a department') setClassError(true);
+    if (classNum === '' || classNum === 'Select a department')
+      setClassError(true);
     else setClassError(false);
   }, [classNum]);
 
@@ -69,7 +78,11 @@ const CreatePost = (props) => {
 
   const classes = useStyles();
 
-  const title = props.isTutor ? (<Typography variant="h4">Request a Tutee</Typography>) : (<Typography variant="h3">Request a Tutor</Typography>);
+  const title = props.isTutor ? (
+    <Typography variant="h4">Request a Tutee</Typography>
+  ) : (
+    <Typography variant="h3">Request a Tutor</Typography>
+  );
 
   const changeDepartment = (event) => {
     setDepartment(event.target.value);
@@ -77,11 +90,11 @@ const CreatePost = (props) => {
   };
 
   const handleClick = () => {
-    const noErrors = (!deptError && !classError && !availError);
-    const postType = props.isTutor ? ('tutors') : ('tutees');
+    const noErrors = !deptError && !classError && !availError;
+    const postType = props.isTutor ? 'tutors' : 'tutees';
     if (noErrors) {
       const post = {
-        type: props.isTutor ? ('tutor') : ('tutee'),
+        type: props.isTutor ? 'tutor' : 'tutee',
         department,
         class: classNum,
         availability,
@@ -94,11 +107,7 @@ const CreatePost = (props) => {
   };
 
   return (
-    <Modal
-      className={classes.modal}
-      open={props.open}
-      closeAfterTransition
-    >
+    <Modal className={classes.modal} open={props.open} closeAfterTransition>
       <Fade in={props.open}>
         <div className={classes.modalBody}>
           <div className={classes.modalHeader}>
@@ -108,8 +117,20 @@ const CreatePost = (props) => {
             </IconButton>
           </div>
           <div className={classes.modalBody}>
-            <Grid container spacing={3} direction="column" justify="center" alignItems="flex-start">
-              <Grid container spacing={3} direction="row" alignItems="center" className={classes.formItem}>
+            <Grid
+              container
+              spacing={3}
+              direction="column"
+              justify="center"
+              alignItems="flex-start"
+            >
+              <Grid
+                container
+                spacing={3}
+                direction="row"
+                alignItems="center"
+                className={classes.formItem}
+              >
                 <Grid item>
                   <Typography variant="h5">Department:</Typography>
                 </Grid>
@@ -123,7 +144,13 @@ const CreatePost = (props) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} direction="row" alignItems="center" className={classes.formItem}>
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                className={classes.formItem}
+              >
                 <Grid item>
                   <Typography variant="h5">Class:</Typography>
                 </Grid>
@@ -131,13 +158,25 @@ const CreatePost = (props) => {
                   <DropdownMenu
                     error={classError}
                     label="Select Class"
-                    options={department === '' ? ['Select a department first'] : classdata.classes[department]}
+                    options={
+                      department === ''
+                        ? ['Select a department first']
+                        : classdata.classes[department]
+                    }
                     value={classNum}
-                    onChange={(event) => { setClassNum(event.target.value); }}
+                    onChange={(event) => {
+                      setClassNum(event.target.value);
+                    }}
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} direction="row" alignItems="center" className={classes.formItem}>
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                className={classes.formItem}
+              >
                 <Grid item>
                   <Typography variant="h5">Availability:</Typography>
                 </Grid>
@@ -151,11 +190,19 @@ const CreatePost = (props) => {
                     size="small"
                     fullWidth
                     value={availability}
-                    onChange={(event) => { setAvailability(event.target.value); }}
+                    onChange={(event) => {
+                      setAvailability(event.target.value);
+                    }}
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} direction="row" alignItems="center" className={classes.formItem}>
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                className={classes.formItem}
+              >
                 <Grid item>
                   <Typography variant="h5">Notes: </Typography>
                 </Grid>
@@ -168,13 +215,25 @@ const CreatePost = (props) => {
                     multiline
                     rows={4}
                     value={notes}
-                    onChange={(event) => { setNotes(event.target.value); }}
+                    onChange={(event) => {
+                      setNotes(event.target.value);
+                    }}
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} direction="row" alignItems="center" justify="flex-end">
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                justify="flex-end"
+              >
                 <Grid item>
-                  <Button variant="contained" className={classes.submitBtn} onClick={handleClick}>
+                  <Button
+                    variant="contained"
+                    className={classes.submitBtn}
+                    onClick={handleClick}
+                  >
                     <Typography>post request</Typography>
                   </Button>
                 </Grid>

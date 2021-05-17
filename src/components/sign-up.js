@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+/* eslint-disable */
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import withStyles from 'react-jss';
+import { makeStyles } from '@material-ui/core/styles';
 import { signupUser } from '../actions';
 
-const styles = {
+const useStyles = makeStyles((theme) => ({
   page: {
     background: '#F7F7F8',
     width: '100vw',
@@ -13,13 +14,6 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  section: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '500px',
   },
   signUp: {
     background: 'white',
@@ -31,6 +25,21 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '4px 4px 20px rgba(0, 0, 0, 0.25)',
     borderTop: 'solid 15px #19AA6E',
+    width: '500px',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      height: '100%',
+    },
+  },
+  section: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '500px',
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
   },
   deleteSubmit: {
     marginTop: 20,
@@ -48,6 +57,11 @@ const styles = {
     input: {
       width: '400px',
       height: '26px',
+      [theme.breakpoints.down('xs')]: {
+        width: 'auto',
+        margin: '10px 14px',
+        flex: 1,
+      },
     },
     h1: {
       color: '#19AA6E',
@@ -71,67 +85,106 @@ const styles = {
       },
     },
   },
-};
+}));
 
-class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editEmail: '',
-      editPassword: '',
-      editName: '',
-      editYear: '',
-      error: '',
-    };
-  }
+const SignUpForm = (props) => {
+  const [state, setState] = useState({
+    editEmail: '',
+    editPassword: '',
+    editName: '',
+    editYear: '',
+    error: '',
+  });
 
-  signUp = (event) => {
+  const signUp = (event) => {
     event.preventDefault(); // prevent page reload on submit
     const NewUser = {
-      name: this.state.editName,
-      year: this.state.editYear,
-      email: this.state.editEmail,
-      password: this.state.editPassword,
+      name: state.editName,
+      year: state.editYear,
+      email: state.editEmail,
+      password: state.editPassword,
     };
     // handle errors on the front end
-    if (!this.state.editName || !this.state.editYear || !this.state.editEmail || !this.state.editPassword || !this.state.editEmail.toLowerCase().includes('@dartmouth.edu')) {
-      this.setState({ error: 'You must provide a unique Dartmouth email address and password, as well as a name and year.' });
+    if (
+      !state.editName ||
+      !state.editYear ||
+      !state.editEmail ||
+      !state.editPassword ||
+      !state.editEmail.toLowerCase().includes('@dartmouth.edu')
+    ) {
+      setState({
+        error:
+          'You must provide a unique Dartmouth email address and password, as well as a name and year.',
+      });
     } else {
-      this.props.signupUser(NewUser, this.props.history);
+      props.signupUser(NewUser, props.history);
     }
-  }
+  };
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.page}>
-        <form className={classes.signUp}>
-          <h1>Sign up!</h1>
-          <p className={classes.error}>{this.state.error}</p>
-          <div className={classes.section}>
-            <p>Name</p>
-            <input onChange={(event) => { this.setState({ editName: event.target.value }); }} value={this.state.editName} />
-          </div>
-          <div className={classes.section}>
-            <p>Year</p>
-            <input type="number" onChange={(event) => { this.setState({ editYear: event.target.value }); }} value={this.state.editYear} />
-          </div>
-          <div className={classes.section}>
-            <p>Email</p>
-            <input onChange={(event) => { this.setState({ editEmail: event.target.value }); }} value={this.state.editEmail} />
-          </div>
-          <div className={classes.section}>
-            <p>Password</p>
-            <input type="password" onChange={(event) => { this.setState({ editPassword: event.target.value }); }} value={this.state.editPassword} />
-          </div>
-          <div className={classes.deleteSubmit}>
-            <button onClick={() => { this.props.history.push('/'); }} type="button" tabIndex={0}>Back</button>
-            <button onClick={this.signUp} type="button" tabIndex={0}>Submit</button>
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+  // render() {
+  const classes = useStyles();
+  return (
+    <div className={classes.page}>
+      <form className={classes.signUp}>
+        <h1>Sign up!</h1>
+        <p className={classes.error}>{state.error}</p>
+        <div className={classes.section}>
+          <p>Name</p>
+          <input
+            className={classes.input}
+            onChange={(event) => {
+              setState({ ...state, editName: event.target.value });
+            }}
+            value={state.editName}
+          />
+        </div>
+        <div className={classes.section}>
+          <p>Year</p>
+          <input
+            type="number"
+            onChange={(event) => {
+              setState({ ...state, editYear: event.target.value });
+            }}
+            value={state.editYear}
+          />
+        </div>
+        <div className={classes.section}>
+          <p>Email</p>
+          <input
+            onChange={(event) => {
+              setState({ ...state, editEmail: event.target.value });
+            }}
+            value={state.editEmail}
+          />
+        </div>
+        <div className={classes.section}>
+          <p>Password</p>
+          <input
+            type="password"
+            onChange={(event) => {
+              setState({ ...state, editPassword: event.target.value });
+            }}
+            value={state.editPassword}
+          />
+        </div>
+        <div className={classes.deleteSubmit}>
+          <button
+            onClick={() => {
+              props.history.push('/');
+            }}
+            type="button"
+            tabIndex={0}
+          >
+            Back
+          </button>
+          <button onClick={signUp} type="button" tabIndex={0}>
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+  // }
+};
 
-export default withRouter(connect(null, { signupUser })(withStyles(styles)(SignUpForm)));
+export default withRouter(connect(null, { signupUser })(SignUpForm));
