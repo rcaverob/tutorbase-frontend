@@ -1,12 +1,15 @@
-/* eslint-disable linebreak-style */
+/* eslint-disable */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'production';
 // set to 'production' or 'development' in your env
 
-const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { loader: 'style-loader' };
+const finalCSSLoader =
+  env === 'production'
+    ? MiniCssExtractPlugin.loader
+    : { loader: 'style-loader' };
 
 module.exports = {
   devServer: {
@@ -34,10 +37,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          { loader: 'babel-loader' },
-          { loader: 'eslint-loader' },
-        ],
+        use: [{ loader: 'babel-loader' }, { loader: 'eslint-loader' }],
       },
       {
         test: /\.s?css/,
