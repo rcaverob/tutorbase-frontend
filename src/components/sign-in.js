@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
     width: '500px',
     [theme.breakpoints.down('xs')]: {
       width: '90%',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
     },
   },
   signIn: {
@@ -61,9 +63,7 @@ const useStyles = makeStyles((theme) => ({
       width: '400px',
       height: '26px',
       [theme.breakpoints.down('xs')]: {
-        width: 'auto',
-        margin: '10px 14px',
-        flex: 1,
+        width: '96%',
       },
     },
     h1: {
@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
     p: {
       fontWeight: 'bold',
       color: '#262B40',
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: '6px',
+      },
     },
     button: {
       background: 'white',
