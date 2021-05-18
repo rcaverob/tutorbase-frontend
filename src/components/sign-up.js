@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     borderTop: 'solid 15px #19AA6E',
     width: '500px',
     [theme.breakpoints.down('xs')]: {
+      padding: 0,
       width: '100%',
       height: '100%',
     },
@@ -39,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
     width: '500px',
     [theme.breakpoints.down('xs')]: {
       width: '90%',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
     },
   },
   deleteSubmit: {
@@ -53,14 +56,16 @@ const useStyles = makeStyles((theme) => ({
     color: '#CD5C5C',
     marginTop: 0,
   },
+  textContainer: {
+    width: '12ch',
+    // marginRight: '2ch',
+  },
   '@global': {
     input: {
       width: '400px',
       height: '26px',
       [theme.breakpoints.down('xs')]: {
-        width: 'auto',
-        margin: '10px 14px',
-        flex: 1,
+        width: '96%',
       },
     },
     h1: {
@@ -69,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
     p: {
       fontWeight: 'bold',
       color: '#262B40',
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: '6px',
+      },
     },
     button: {
       background: 'white',
@@ -129,7 +137,9 @@ const SignUpForm = (props) => {
         <h1>Sign up!</h1>
         <p className={classes.error}>{state.error}</p>
         <div className={classes.section}>
-          <p>Name</p>
+          <div className={classes.textContainer}>
+            <p>Name</p>
+          </div>
           <input
             className={classes.input}
             onChange={(event) => {
@@ -139,7 +149,9 @@ const SignUpForm = (props) => {
           />
         </div>
         <div className={classes.section}>
-          <p>Year</p>
+          <div className={classes.textContainer}>
+            <p>Year</p>
+          </div>
           <input
             type="number"
             onChange={(event) => {
@@ -149,7 +161,9 @@ const SignUpForm = (props) => {
           />
         </div>
         <div className={classes.section}>
-          <p>Email</p>
+          <div className={classes.textContainer}>
+            <p>Email</p>
+          </div>
           <input
             onChange={(event) => {
               setState({ ...state, editEmail: event.target.value });
@@ -158,7 +172,9 @@ const SignUpForm = (props) => {
           />
         </div>
         <div className={classes.section}>
-          <p>Password</p>
+          <div className={classes.textContainer}>
+            <p>Password</p>
+          </div>
           <input
             type="password"
             onChange={(event) => {
