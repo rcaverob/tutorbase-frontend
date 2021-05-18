@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   textContainer: {
     width: '12ch',
-    // marginRight: '2ch',
   },
   '@global': {
     input: {

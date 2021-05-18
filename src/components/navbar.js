@@ -29,52 +29,45 @@ const Navbar = (props) => {
     if (props.authenticated) {
       return (
         <div className="right-header">
-          <Button variant="contained" className={classes.submitBtn}>
-            <NavLink
-              id="sign-out-button"
-              to="/"
-              onClick={props.signoutUser}
-              className={classes.linkText}
+          <NavLink id="sign-out-button" to="/" onClick={props.signoutUser}>
+            <Button
+              variant="contained"
+              className={classes.submitBtn + ' ' + classes.linkText}
             >
               Sign Out
-            </NavLink>
-          </Button>
+            </Button>
+          </NavLink>
         </div>
       );
     } else {
       return (
         <div className="right-header">
-          <Button variant="contained" className={classes.submitBtn}>
-            <NavLink
-              id="sign-up-button"
-              to="/signup"
-              className={classes.linkText}
+          <NavLink id="sign-up-button" to="/signup">
+            <Button
+              variant="contained"
+              className={classes.submitBtn + ' ' + classes.linkText}
             >
               Sign Up
-            </NavLink>
-          </Button>
-          <Button variant="contained" className={classes.submitBtn}>
-            <NavLink
-              id="sign-in-button"
-              to="/signin"
-              className={classes.linkText}
+            </Button>
+          </NavLink>
+          <NavLink
+            id="sign-in-button"
+            to="/signin"
+            className={classes.linkText}
+          >
+            <Button
+              variant="contained"
+              className={classes.submitBtn + ' ' + classes.linkText}
             >
               Sign In
-            </NavLink>
-          </Button>
+            </Button>
+          </NavLink>
         </div>
       );
     }
   };
 
-  return (
-    <nav>
-      {/* <ul> */}
-      {/* <NavLink id="home-button" exact to="/">Tutor Base</NavLink> */}
-      {signUpInOut()}
-      {/* </ul> */}
-    </nav>
-  );
+  return <nav>{signUpInOut()}</nav>;
 };
 
 function mapStateToProps(reduxState) {
