@@ -42,7 +42,7 @@ const MyRequests = (props) => {
       <Card key={request._id} className={classes.root}>
         <CardContent>
           <Typography variant="h5" component="h2">
-            {request.type === 'tutors' ? 'Potential Tutee' : 'Potential Tutor'}
+            {request.type === 'tutors' ? 'Potential Tutor' : 'Potential Tutee'}
           </Typography>
           <Typography variant="h6" component="p">
             Class: {request.postID.department} {request.postID.class}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { signinUser } from '../actions';
 import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -125,6 +126,27 @@ const SignInForm = (props) => {
 
   const classes = useStyles();
 
+  const DemoButton = () => (
+    <Button
+      variant="contained"
+      style={{
+        marginTop: 18,
+        background:
+          'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
+        color: 'white',
+      }}
+      onClick={() => {
+        const User = {
+          email: 'demouser@dartmouth.edu',
+          password: 'password',
+        };
+        props.signinUser(User, props.history);
+      }}
+    >
+      Demo User
+    </Button>
+  );
+
   return (
     <div className={classes.page}>
       <form className={classes.signIn}>
@@ -163,6 +185,7 @@ const SignInForm = (props) => {
             Submit
           </button>
         </div>
+        <DemoButton className={classes.button} />
       </form>
       {/* <p>
         Don&#39;t have an account?{' '}

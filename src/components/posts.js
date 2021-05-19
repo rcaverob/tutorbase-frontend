@@ -11,6 +11,7 @@ import { fetchPosts, sendTRequest, getMyRequests } from '../actions/index';
 import favicon from '../img/favicon.ico';
 import PostCard from './PostCard';
 import { useMediaQuery } from '@material-ui/core';
+import post from './post';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const Posts = (props) => {
   let [mode] = useState(props.mode);
   const [currentPostID, setPostID] = useState(0);
+  const [currentAuthorID, setAuthorID] = useState(0);
   const [userName, setUserName] = useState('none');
   const [modalOpen, editModal] = useState(false);
   const [searchString, setSearchString] = useState('');
@@ -93,8 +95,9 @@ const Posts = (props) => {
     );
   });
 
-  const setPostModalInfo = (postID, username) => {
+  const setPostModalInfo = (postID, authorID, username) => {
     setPostID(postID);
+    setAuthorID(authorID);
     setUserName(username);
     editModal(true);
   };
@@ -114,7 +117,8 @@ const Posts = (props) => {
     const postItems = filteredStudents.map((post) => {
       curKey += 1;
       const buttonIsDisabled =
-        props.requestedPostIDs.indexOf(post.postID) !== -1;
+        props.requestedPostIDs.indexOf(post.postID) !== -1 ||
+        props.currentUser?.id === post.userID;
       return (
         <PostCard
           key={curKey}
@@ -154,7 +158,7 @@ const Posts = (props) => {
       </Container>
     );
   });
-
+  console.log(currentAuthorID);
   return (
     <div>
       <img src={favicon} alt="" style={{ display: 'none' }} />
@@ -165,7 +169,10 @@ const Posts = (props) => {
         handleClose={() => {
           editModal(false);
         }}
-        buttonIsDisabled={props.requestedPostIDs.indexOf(currentPostID) !== -1}
+        buttonIsDisabled={
+          props.requestedPostIDs.indexOf(currentPostID) !== -1 ||
+          props.currentUser?.id === currentAuthorID
+        }
         id={currentPostID}
         username={userName}
       />
@@ -187,6 +194,7 @@ const Posts = (props) => {
 
 function mapStateToProps(reduxState) {
   return {
+    currentUser: reduxState.auth.currentUser,
     posts: reduxState.posts.all,
     auth: reduxState.auth.authenticated,
     requestedPostIDs: reduxState.requests.requestedPostIDs,

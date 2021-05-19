@@ -3,7 +3,8 @@ import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { signupUser } from '../actions';
+import { signupUser, signinUser } from '../actions';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -103,6 +104,27 @@ const SignUpForm = (props) => {
     error: '',
   });
 
+  const DemoButton = () => (
+    <Button
+      variant="contained"
+      style={{
+        marginTop: 18,
+        background:
+          'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
+        color: 'white',
+      }}
+      onClick={() => {
+        const User = {
+          email: 'demouser@dartmouth.edu',
+          password: 'password',
+        };
+        props.signinUser(User, props.history);
+      }}
+    >
+      Demo User
+    </Button>
+  );
+
   const signUp = (event) => {
     event.preventDefault(); // prevent page reload on submit
     const NewUser = {
@@ -196,10 +218,13 @@ const SignUpForm = (props) => {
             Submit
           </button>
         </div>
+        <DemoButton />
       </form>
     </div>
   );
   // }
 };
 
-export default withRouter(connect(null, { signupUser })(SignUpForm));
+export default withRouter(
+  connect(null, { signupUser, signinUser })(SignUpForm)
+);

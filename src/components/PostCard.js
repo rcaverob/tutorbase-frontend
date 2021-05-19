@@ -66,7 +66,11 @@ const PostCard = (props) => {
     >
       <div
         onClick={() => {
-          props.setPostModalInfo(props.post.postID, props.post.user.name);
+          props.setPostModalInfo(
+            props.post.postID,
+            props.post.user._id,
+            props.post.user.name
+          );
         }}
       >
         <Typography variant="h5" component="h2">
