@@ -158,7 +158,6 @@ const Posts = (props) => {
       </Container>
     );
   });
-  console.log(currentAuthorID);
   return (
     <div>
       <img src={favicon} alt="" style={{ display: 'none' }} />

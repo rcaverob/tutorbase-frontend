@@ -5,9 +5,13 @@ const initialState = {
   tutees: [],
 };
 
-
 const MyPostsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.DEAUTH_USER:
+      return {
+        tutors: [],
+        tutees: [],
+      };
     case ActionTypes.FETCH_MY_TUTEE_POSTS:
       return { tutors: state.tutors, tutees: action.payload };
     case ActionTypes.FETCH_MY_TUTOR_POSTS:

@@ -8,8 +8,12 @@ const initialState = {
 
 const requestsReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case ActionTypes.FETCH_POST:
-    //   return { all: state.all, current: action.payload };
+    case ActionTypes.DEAUTH_USER:
+      return {
+        incomingRequests: [],
+        myRequests: [],
+        requestedPostIDs: [],
+      };
     case ActionTypes.FETCH_REQUESTS:
       return {
         incomingRequests: action.payload,
