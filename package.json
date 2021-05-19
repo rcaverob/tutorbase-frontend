@@ -9,8 +9,8 @@
     "start": "SET NODE_ENV=development& webpack-dev-server",
     "test": "eslint src/**.js",
     "clean": "rimraf node_modules",
-    "build": "SET WEBPACK_ENV=production& webpack --colors",
-    "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors",
+    "build": "npm install -g webpack & yarn winbuild",
+    "winbuild": "cross-env WEBPACK_ENV=production NODE_ENV=production webpack --colors",
     "deploy": "yarn build; surge -p dist -d tutor_base.surge.sh; yarn clean"
   },
   "devDependencies": {

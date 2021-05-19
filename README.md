@@ -4,20 +4,18 @@ Tutor Base is website designed to match Tutors and Tutees more efficiently with 
 
 ## Architecture
 
-Descriptions of code organization and tools and libraries used
-
 ### Code organization:
 
-- Data management (users, tutor/tutee posts) handled in the [API](https://github.com/dartmouth-cs52-20S/project-api-tutorbase)
+- Data management (users, tutor/tutee posts) handled in the [API](https://github.com/rcaverob/tutorbase-backend)
 - Components are broken down using the ReactJS component frameworks
 - A global Redux state is used to more easily manage variables needed by a handful of components
   - Actions managed in [/actions](./actions), reducers handled in [/reducers](./reducers)
 - Different components are accessible via routing
 
-### Libraries used:
-
-- Material UI for styling components
-- react-elatic-carousel to display the posts in a carousel style
+### Technologies used:
+- React.js
+- Redux
+- Material UI 
 
 ## Setup
 
