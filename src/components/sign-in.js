@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { signinUser } from '../actions';
 import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -23,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
     width: '500px',
     [theme.breakpoints.down('xs')]: {
       width: '90%',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
     },
   },
   signIn: {
@@ -61,9 +64,7 @@ const useStyles = makeStyles((theme) => ({
       width: '400px',
       height: '26px',
       [theme.breakpoints.down('xs')]: {
-        width: 'auto',
-        margin: '10px 14px',
-        flex: 1,
+        width: '96%',
       },
     },
     h1: {
@@ -72,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
     p: {
       fontWeight: 'bold',
       color: '#262B40',
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: '6px',
+      },
     },
     button: {
       background: 'white',
@@ -122,6 +126,27 @@ const SignInForm = (props) => {
 
   const classes = useStyles();
 
+  const DemoButton = () => (
+    <Button
+      variant="contained"
+      style={{
+        marginTop: 18,
+        background:
+          'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
+        color: 'white',
+      }}
+      onClick={() => {
+        const User = {
+          email: 'demouser@dartmouth.edu',
+          password: 'password',
+        };
+        props.signinUser(User, props.history);
+      }}
+    >
+      Demo User
+    </Button>
+  );
+
   return (
     <div className={classes.page}>
       <form className={classes.signIn}>
@@ -160,6 +185,7 @@ const SignInForm = (props) => {
             Submit
           </button>
         </div>
+        <DemoButton className={classes.button} />
       </form>
       {/* <p>
         Don&#39;t have an account?{' '}

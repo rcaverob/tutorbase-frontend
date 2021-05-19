@@ -9,11 +9,10 @@ import {
   Typography,
   CardContent,
   Divider,
-  Grid, // Container
+  Grid,
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
-// import { blue } from '@material-ui/core/colors';
 import { withRouter } from 'react-router-dom';
 import { fetchMyPosts, deletePost } from '../actions/index';
 
@@ -21,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
     margin: 20,
-  },
-  container: {
-    // backgroundColor: blue[100],
   },
 }));
 

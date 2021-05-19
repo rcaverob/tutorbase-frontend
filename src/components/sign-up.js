@@ -3,7 +3,8 @@ import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { signupUser } from '../actions';
+import { signupUser, signinUser } from '../actions';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     borderTop: 'solid 15px #19AA6E',
     width: '500px',
     [theme.breakpoints.down('xs')]: {
+      padding: 0,
       width: '100%',
       height: '100%',
     },
@@ -39,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
     width: '500px',
     [theme.breakpoints.down('xs')]: {
       width: '90%',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
     },
   },
   deleteSubmit: {
@@ -53,14 +57,15 @@ const useStyles = makeStyles((theme) => ({
     color: '#CD5C5C',
     marginTop: 0,
   },
+  textContainer: {
+    width: '12ch',
+  },
   '@global': {
     input: {
       width: '400px',
       height: '26px',
       [theme.breakpoints.down('xs')]: {
-        width: 'auto',
-        margin: '10px 14px',
-        flex: 1,
+        width: '96%',
       },
     },
     h1: {
@@ -69,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
     p: {
       fontWeight: 'bold',
       color: '#262B40',
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: '6px',
+      },
     },
     button: {
       background: 'white',
@@ -95,6 +103,27 @@ const SignUpForm = (props) => {
     editYear: '',
     error: '',
   });
+
+  const DemoButton = () => (
+    <Button
+      variant="contained"
+      style={{
+        marginTop: 18,
+        background:
+          'linear-gradient(278.24deg, #46BAA4 2.24%, #70D27E 111.24%)',
+        color: 'white',
+      }}
+      onClick={() => {
+        const User = {
+          email: 'demouser@dartmouth.edu',
+          password: 'password',
+        };
+        props.signinUser(User, props.history);
+      }}
+    >
+      Demo User
+    </Button>
+  );
 
   const signUp = (event) => {
     event.preventDefault(); // prevent page reload on submit
@@ -129,7 +158,9 @@ const SignUpForm = (props) => {
         <h1>Sign up!</h1>
         <p className={classes.error}>{state.error}</p>
         <div className={classes.section}>
-          <p>Name</p>
+          <div className={classes.textContainer}>
+            <p>Name</p>
+          </div>
           <input
             className={classes.input}
             onChange={(event) => {
@@ -139,7 +170,9 @@ const SignUpForm = (props) => {
           />
         </div>
         <div className={classes.section}>
-          <p>Year</p>
+          <div className={classes.textContainer}>
+            <p>Year</p>
+          </div>
           <input
             type="number"
             onChange={(event) => {
@@ -149,7 +182,9 @@ const SignUpForm = (props) => {
           />
         </div>
         <div className={classes.section}>
-          <p>Email</p>
+          <div className={classes.textContainer}>
+            <p>Email</p>
+          </div>
           <input
             onChange={(event) => {
               setState({ ...state, editEmail: event.target.value });
@@ -158,7 +193,9 @@ const SignUpForm = (props) => {
           />
         </div>
         <div className={classes.section}>
-          <p>Password</p>
+          <div className={classes.textContainer}>
+            <p>Password</p>
+          </div>
           <input
             type="password"
             onChange={(event) => {
@@ -181,10 +218,13 @@ const SignUpForm = (props) => {
             Submit
           </button>
         </div>
+        <DemoButton />
       </form>
     </div>
   );
   // }
 };
 
-export default withRouter(connect(null, { signupUser })(SignUpForm));
+export default withRouter(
+  connect(null, { signupUser, signinUser })(SignUpForm)
+);
