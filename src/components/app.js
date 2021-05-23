@@ -17,10 +17,6 @@ import Tutors from './tutors';
 import Tutees from './tutees';
 import Fallback from './fallback';
 
-// Comment one of the two out based on what you're using
-// const ROOT_URL = 'http://localhost:9090/';
-// const ROOT_URL = 'https://tutorbase.herokuapp.com/api';
-
 const withSidebar = (Component) => {
   const result = () => (
     <SideBar>
@@ -30,33 +26,7 @@ const withSidebar = (Component) => {
   return result;
 };
 
-// const UsersPosts = (props) => {
-//   return (
-//     <SideBar>
-//       {/* Your posts */}
-//       <MyPosts />
-//     </SideBar>
-//   );
-// };
-
-// const UserMatches = (props) => {
-//   return (
-//     <SideBar>
-//       <Matches />
-//     </SideBar>
-//   );
-// };
-
 class App extends React.Component {
-  // componentDidMount() {
-  //   axios
-  //     .get(`${ROOT_URL}`)
-  //     .then((response) => {
-  //     })
-  //     .catch((error) => {
-  //     });
-  // }
-
   render() {
     return (
       <Router>

@@ -29,7 +29,12 @@ const Navbar = (props) => {
     if (props.authenticated) {
       return (
         <div className="right-header">
-          <NavLink id="sign-out-button" to="/" onClick={props.signoutUser}>
+          <NavLink
+            id="sign-out-button"
+            to="/"
+            onClick={props.signoutUser}
+            className={classes.linkText}
+          >
             <Button
               variant="contained"
               className={classes.submitBtn + ' ' + classes.linkText}
@@ -42,7 +47,11 @@ const Navbar = (props) => {
     } else {
       return (
         <div className="right-header">
-          <NavLink id="sign-up-button" to="/signup">
+          <NavLink
+            id="sign-up-button"
+            to="/signup"
+            className={classes.linkText}
+          >
             <Button
               variant="contained"
               className={classes.submitBtn + ' ' + classes.linkText}

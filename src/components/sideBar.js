@@ -23,25 +23,6 @@ import whiteLogo from '../img/whiteLogo.png';
 
 const drawerWidth = 240;
 
-// const useStyles2 = makeStyles((theme) => ({
-//   root: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//     '& > *': {
-//       margin: theme.spacing(1),
-//     },
-//   },
-//   small: {
-//     width: theme.spacing(3),
-//     height: theme.spacing(3),
-//   },
-//   large: {
-//     width: theme.spacing(14),
-//     height: theme.spacing(14),
-//     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-//   },
-// }));
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -73,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(1),
+    },
   },
   link: {
     width: '100%',

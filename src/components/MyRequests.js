@@ -6,8 +6,6 @@ import { withRouter } from 'react-router-dom';
 
 import {
   Card,
-  CardActions,
-  Button,
   Typography,
   CardContent,
   Divider,
@@ -31,9 +29,6 @@ const MyRequests = (props) => {
 
   useEffect(() => {
     props.getMyRequests();
-
-    // You can uncomment the line below, in order to fix a crash upon pressing the Matches tab
-    // props.clearMatches();
   }, []);
   const classes = useStyles();
 
@@ -54,25 +49,6 @@ const MyRequests = (props) => {
             Year: {request.userID.year}
           </Typography>
         </CardContent>
-
-        {/* <CardActions>
-          <Button
-            size="small"
-            onClick={() => {
-              handleAccept(request);
-            }}
-          >
-            Accept
-          </Button>
-          <Button
-            size="small"
-            onClick={() => {
-              handleDecline(request);
-            }}
-          >
-            Decline
-          </Button>
-        </CardActions> */}
       </Card>
     );
   });
